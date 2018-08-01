@@ -53,7 +53,7 @@ export default {
 
             for (let key in this.shared.events) {
                 if (this.shared.events[key].title.toLowerCase().includes(q) ||
-                this.shared.events[key].desc.toLowerCase().includes(q) ||
+                (this.shared.events[key].description || "").toLowerCase().includes(q) ||
                 this.shared.events[key].time.toLowerCase().includes(q))
                     filtered[key] = this.shared.events[key]
             }
