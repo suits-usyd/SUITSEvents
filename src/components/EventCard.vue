@@ -4,10 +4,9 @@ md-card.event-card(@click.native="$emit('openEvent', event.id, $event)")
         h1.md-title {{event.title}}
 
     md-card-content
-        h2.md-subheading {{event.desc}}
+        h2.md-subheading {{event.description}}
         label {{eventDate}}
-    
-    
+
     md-button.md-icon-button.delete-button(@click.stop="shared.dialogs.deleteEvent.open = true; shared.dialogs.deleteEvent.selectedEvent = event.id")
         md-icon.md-primary(md-theme="blue") delete
 
@@ -43,6 +42,6 @@ export default {
 .delete-button
     position: absolute
     bottom: 0
-    right: 0 
+    right: 0
 
 </style>
