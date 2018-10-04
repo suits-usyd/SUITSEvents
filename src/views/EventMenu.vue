@@ -1,6 +1,6 @@
 <template lang="pug">
 div#event-menu
-	md-button.md-fab.md-accent.new-event-btn.md-raised(v-on:click="shared.dialogs.newEvent = true")
+	md-button#new-event-btn.md-fab.md-accent.md-raised(@click="shared.dialogs.newEvent = true")
 			md-icon add
 			md-tooltip(direction="bottom") Add Event
 	add-event-dialog(ref="add-event-dialog")
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="sass">
-.new-event-btn
+#new-event-btn
 	position: absolute
 	right: 16px
 	top: 29px

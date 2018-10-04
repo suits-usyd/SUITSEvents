@@ -5,12 +5,14 @@ md-card
 		h2.md-subheading {{event.title}} - {{eventDate}}
 	
 	md-card-content
-		md-list.list.md-double-line
-			md-list-item(v-for="a in eventAttendance", @click="shared.selectedMember = a.member.id")
+		md-list#report-list.md-double-line
+			md-list-item(v-for="a of attendance", :key="a.id", @click="shared.selectedMember = a.member.id")
 				div.md-list-item-text
-					span {{getAttendee(a.member.id).firstName}} {{getAttendee(a.member.id).lastName}}
+					span {{a.member.firstName}} {{a.member.lastName}}
 					span(v-if="a.additional") {{a.additional}}
 				div
+					md-icon(v-if="a.member.access && !a.member.email") person_outline
+					md-icon(v-if="!a.member.access") attach_money
 					md-icon(v-if="a.secondary") local_drink
 					md-icon(v-if="a.primary") local_pizza
 	
@@ -29,7 +31,7 @@ md-card
 	md-card-actions
 		div.summary
 			md-icon.people-icon people
-			label {{attendees.length}}
+			label {{attendance.length}}
 
 		div.summary
 			md-icon.people-icon attach_money
@@ -61,17 +63,16 @@ export default {
 		eventAttendance () {
 			return this.shared.attendance.filter(a => a.event.id == this.$route.params.id)
 		},
-		attendees() {
-			return this.eventAttendance.map(a => this.shared.members.find(m => m.id == a.member.id)) || []
+		attendance() {
+			return this.eventAttendance.map(a => Object.assign({}, a, {
+				member: this.shared.members.find(m => m.id == a.member.id),
+			}));
 		},
 		revenue() {
 			let result = 0;
-			for (let m of this.attendees) {
-				let isAccess = m.access;
-				let att = this.eventAttendance.find(a => a.member.id)
-
+			for (let att of this.attendance) {
 				if (att.primary) 
-					result += (isAccess) ? this.accessPrice : this.nonAccessPrice;
+					result += att.member.access ? this.accessPrice : this.nonAccessPrice;
 				
 				if (att.secondary)
 					result += this.drinkPrice;
@@ -79,35 +80,46 @@ export default {
 			}
 			return result;
 		},
-        eventDate() {
-            return moment(this.event.time).format("MMM Do YY")
-        }
+		eventDate() {
+			return moment(this.event.time).format("Do MMM YYYY");
+		},
 	},
 	methods: {
-		getAttendee(memId) {
-			return this.attendees.find(m => m.id == memId)
-		},
 		downloadAttendees() {
-			let output = "firstName,lastName,access,bbq,drink,additional\n";
-			for (let i = 0; i < this.eventAttendance.length; i++) {
-				let att = this.eventAttendance[i]
-				let member = this.attendees.find(m => m.id == att.member.id);
-				output += [member.firstName, member.lastName, member.access, att.primary, att.secondary, att.additional].join(',') + '\n';
+			let output = ["firstName,lastName,access,bbq,drink,additional\n"];
+			/*
+			let numAccess = 0;
+			let numAccessFood = 0;
+			let numNonAccessFood = 0;
+			let numDrinks = 0;
+			*/
+			for (let att of this.attendance.slice().reverse()) {
+				let m = att.member;
+				output.push([m.firstName, m.lastName, m.access, att.primary, att.secondary, att.additional].join(','));
+				output.push('\n');
+				/*
+				if (m.access) {
+					numAccess += 1;
+					if (att.primary) numAccessFood += 1;
+				} else if (att.primary) {
+					numNonAccessFood += 1;
+				}
+				if (att.secondary) numDrinks += 1;
+				*/
 			}
 
-			output += '\n';
-			output += 'Total attendees:,' + this.eventAttendance.length + '\n';
-			output += 'Total revenue:,' + this.revenue + '\n';
+			output.push('\n\nTotal attendees:,' + this.eventAttendance.length);
+			output.push('\nTotal revenue:,' + this.revenue);
 
-			output += 'Access attendees:,' + this.attendees.filter(m => m.access).length + '\n';
-			output += 'Non-access attendees:,' + this.attendees.filter(m => !m.access).length + '\n';
+			output.push('\nAccess attendees:,' + this.attendance.filter(a => a.member.access).length);
+			output.push('\nNon-access attendees:,' + this.attendance.filter(a => !a.member.access).length);
 
-			output += 'Access foods:,' + this.eventAttendance.filter(a => a.primary && this.attendees.find(m => m.id == a.member.id).access).length + '\n';
-			output += 'Non-Access foods:,' + this.eventAttendance.filter(a => a.primary && !this.attendees.find(m => m.id == a.member.id).access).length + '\n';
+			output.push('\nAccess foods:,' + this.attendance.filter(a => a.primary && !a.member.access).length);
+			output.push('\nNon-Access foods:,' + this.attendance.filter(a => a.primary && a.member.access).length);
 
-			output += 'Drinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n';
-			
-			let outputBlob = new Blob([output], {type:'text/csv'});
+			output.push('\nDrinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n');
+
+			let outputBlob = new Blob(output, {type:'text/csv'});
 
 			let downloadLink = document.createElement('a');
 			document.body.appendChild(downloadLink);
@@ -132,11 +144,11 @@ export default {
 .people-icon
 	margin-right: 3px
 
-.list
+#report-list
 	max-height: 60vh
-	overflow: scroll
+	overflow-y: auto
 
 .error
-    color: #ff1744!important
+	color: #ff1744!important
 
 </style>

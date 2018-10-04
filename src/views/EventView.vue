@@ -1,10 +1,10 @@
 <template lang="pug">
 div.md-layout.md-gutter
 	event-report.md-layout-item
-	event-attendance.md-layout-item
+	event-attendance.md-layout-item(@unknown-access="")
 	div.md-layout-item
-		attendance-form.att-form
-		new-attendee-form.new-att-form
+		attendance-form#att-form
+		new-attendee-form#new-att-form
 </template>
 
 <script>
@@ -38,10 +38,10 @@ export default {
 
 <style lang="sass">
 
-.att-form
+#att-form
 	margin-bottom: 10px
 
-.new-att-form
+#new-att-form
 	margin-top: 10px
 
 </style>

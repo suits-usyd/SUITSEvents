@@ -4,7 +4,7 @@ div
         label Search
         md-input(v-model="query")
     div.md-layout
-        div.md-layout-item(v-for="event in filteredEvents")
+        div.md-layout-item(v-for="event of filteredEvents", :key="event.id")
             event-card.event(:event="event", @openEvent="openEvent", @deleteEvent="")
 
     md-dialog-confirm(
@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         openEvent (eventId, domEvent) {
-            this.$router.push('/event/'+eventId)
+            this.$router.push({ name: 'event', params: { id: eventId } });
         },
         removeEvent () {
             $http.deleteEvent(this.shared.dialogs.deleteEvent.selectedEvent);
@@ -46,16 +46,18 @@ export default {
     },
     computed: {
         filteredEvents () {
-            let filtered = {};
+            let filtered = [];
             let q = this.query.toLowerCase();
             if (q == "")
                 return this.shared.events;
 
-            for (let key in this.shared.events) {
-                if (this.shared.events[key].title.toLowerCase().includes(q) ||
-                (this.shared.events[key].description || "").toLowerCase().includes(q) ||
-                this.shared.events[key].time.toLowerCase().includes(q))
-                    filtered[key] = this.shared.events[key]
+            for (let ev of this.shared.events) {
+                if (ev.title.toLowerCase().includes(q)
+                    || (ev.description || "").toLowerCase().includes(q)
+                    || ev.time.toLowerCase().includes(q)
+                ) {
+                    filtered.push(ev);
+                }
             }
 
             return filtered;

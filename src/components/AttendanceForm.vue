@@ -3,13 +3,16 @@ md-card
     form(@submit.prevent="changeAttendance")
         md-card-header
             h1.md-title Attendance
-            h2.md-subheading(v-if="shared.selectedMember") 
+            h2.md-subheading(v-if="shared.selectedMember")
                 span {{member.firstName}} {{member.lastName}}
-                p.error(v-show="error") {{error}}
-        
-        md-card-content(v-if="shared.selectedMember")
+                span(v-if="member.access") &nbsp;— {{member.access}}
+                    md-icon(v-if="!member.email") person_outline
+                md-icon(v-else) attach_money
 
-                md-checkbox(v-model="attendance.primary") Food
+                p.error(v-show="error") {{error}}
+
+        md-card-content(v-if="shared.selectedMember")
+                md-checkbox#food-checkbox(v-model="attendance.primary") Food
                 md-checkbox(v-model="attendance.secondary") Drink
 
                 md-field
@@ -60,6 +63,9 @@ export default {
             if (resp != null) {
                 state.selectedMember = null;
                 this.error = null;
+                let input = document.getElementById("search-member");
+                input.select();
+                input.focus();
             }
             else
                 this.error = "Something went wrong"
@@ -76,7 +82,7 @@ export default {
     },
     watch: {
         selectedMember(newMember) {
-            if (!this.selectedMember)    
+            if (!this.selectedMember)
                 return
 
             let att = this.shared.attendance.find(a => a.member.id == this.selectedMember && a.event.id == this.$route.params.id);
@@ -99,6 +105,8 @@ export default {
                 }
             }
 
+            let checkbox = document.getElementById("food-checkbox");
+            checkbox.focus();
         }
     }
 }

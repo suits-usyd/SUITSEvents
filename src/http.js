@@ -60,7 +60,7 @@ export default {
         let resp = await response($http.get('/attendance?'+params.toString()));
         if (resp == null)
             return null;
-        return resp.data;
+        return resp.data.reverse();
     },
     async addAttendance(eventId, memberId, data) {
         let att = state.attendance.find(a => a.member.id == memberId && a.event.id == eventId);

@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         eventDate() {
-            return moment(this.event.time).format("MMM Do YY")
+            return moment(this.event.time).format("Do MMM YYYY");
         }
     }
 }

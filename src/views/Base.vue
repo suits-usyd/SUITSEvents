@@ -2,7 +2,7 @@
 div
 	md-toolbar.md-primary
 		h3.md-title 
-			a.title-link(href="/") SUITS Events
+			router-link.title-link(to="/") SUITS Events
 
 	router-view.content
 </template>

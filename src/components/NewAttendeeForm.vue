@@ -7,7 +7,7 @@ md-card
 		md-card-content
 			md-field
 				label First Name
-				md-input(v-model="firstName", required)
+				md-input#new-att-fname(v-model="firstName", required)
 
 			md-field
 				label Last Name
@@ -15,7 +15,7 @@ md-card
 
 			md-field
 				label Access
-				md-input(v-model="access", type="number")
+				md-input(v-model.number="access", type="number")
 
 		md-card-actions
 			md-button(type="submit") Submit
@@ -24,6 +24,7 @@ md-card
 
 <script>
 import http from '../http';
+import state from '../state';
 
 export default {
 	name: 'new-attendee-form',
@@ -31,23 +32,30 @@ export default {
 		return {
 			firstName: null,
 			lastName: null,
-			access: null
+			access: null,
+			shared: state,
 		}
 	},
 	methods: {
 		async submitForm() {
-			await http.addUnregMember({
+			let id = await http.addUnregMember({
 				firstName: this.firstName,
 				lastName: this.lastName,
-				access: parseInt(this.access) || undefined
+				access: this.access || undefined,
 			});
+			if (id != null) {
+				this.shared.selectedMember = id;
+			}
 
 			this.firstName = null;
 			this.lastName = null;
 			this.access = null;
-
-
-		}
+		},
+		setAID(aid) {
+			this.access = aid;
+			let input = document.getElementById("new-att-fname");
+			input.focus();
+		},
 	}
 }
 </script>

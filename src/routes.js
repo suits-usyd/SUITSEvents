@@ -17,6 +17,7 @@ const routes = [
 				component: view('EventMenu')
 			},
 			{
+				name: 'event',
 				path: '/event/:id',
 				component: view('EventView')
 			}
@@ -29,11 +30,7 @@ const router = new VueRouter({routes});
 router.beforeEach((to, from, next) => {
 	let token = state.token;
 	if (to.path == '/login') {
-		//login path is publically accessible, but if already logged in, go away
-		if (token)
-			next('/'); // if logged in, don't log in again
-		else
-			next();
+		next();
 	}
 	else {
 		if (token)
