@@ -11,7 +11,7 @@ md-dialog(:md-active.sync="shared.dialogs.newEvent")
 
 			md-field
 				label Additional Info
-				md-input(v-model="desc")
+				md-input(v-model="description")
 
 			md-datepicker(v-model="time")
 
@@ -38,7 +38,7 @@ export default {
 		addEvent: async function () {
 			let data = {
 				title: this.title,
-				desc: this.desc,
+				description: this.description,
 				time: this.time
 			};
 
@@ -46,10 +46,10 @@ export default {
 
 			if (resp == null)
 				return;
-			
+
 			//reset fields
 			this.title = "";
-			this.desc = "";
+			this.description = "";
 			this.time = new Date();
 
 			this.shared.dialogs.newEvent = false;
