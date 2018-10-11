@@ -3,7 +3,7 @@ md-card
 	md-card-header
 		h1.md-title Report
 		h2.md-subheading {{event.title}} - {{eventDate}}
-	
+
 	md-card-content
 		md-list#report-list.md-double-line
 			md-list-item(v-for="a of attendance", :key="a.id", @click="shared.selectedMember = a.member.id")
@@ -15,7 +15,7 @@ md-card
 					md-icon(v-if="!a.member.access") attach_money
 					md-icon(v-if="a.secondary") local_drink
 					md-icon(v-if="a.primary") local_pizza
-	
+
 		md-field
 			label Access
 			md-input(v-model.number="accessPrice", type="number")
@@ -71,9 +71,9 @@ export default {
 		revenue() {
 			let result = 0;
 			for (let att of this.attendance) {
-				if (att.primary) 
+				if (att.primary)
 					result += att.member.access ? this.accessPrice : this.nonAccessPrice;
-				
+
 				if (att.secondary)
 					result += this.drinkPrice;
 
@@ -114,8 +114,8 @@ export default {
 			output.push('\nAccess attendees:,' + this.attendance.filter(a => a.member.access).length);
 			output.push('\nNon-access attendees:,' + this.attendance.filter(a => !a.member.access).length);
 
-			output.push('\nAccess foods:,' + this.attendance.filter(a => a.primary && !a.member.access).length);
-			output.push('\nNon-Access foods:,' + this.attendance.filter(a => a.primary && a.member.access).length);
+			output.push('\nAccess foods:,' + this.attendance.filter(a => a.primary && a.member.access).length);
+			output.push('\nNon-Access foods:,' + this.attendance.filter(a => a.primary && !a.member.access).length);
 
 			output.push('\nDrinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n');
 
