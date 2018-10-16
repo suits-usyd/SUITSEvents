@@ -86,16 +86,14 @@ export default {
 	},
 	methods: {
 		downloadAttendees() {
-			let output = ["firstName,lastName,access,bbq,drink,additional\n"];
-			/*
-			let numAccess = 0;
-			let numAccessFood = 0;
-			let numNonAccessFood = 0;
-			let numDrinks = 0;
-			*/
+			let output = ["AID,First Name,Last Name,food,drink,additional\n"];
+			const numAccess = this.attendance.filter(a => a.primary && a.member.access).length;
+			const numNonAccess = this.attendance.filter(a => a.primary && !a.member.access).length;
+			const numDrinks = this.attendance.reduce((acc, a) => acc + a.secondary, 0);
+
 			for (let att of this.attendance.slice().reverse()) {
 				let m = att.member;
-				output.push([m.firstName, m.lastName, m.access, att.primary, att.secondary, att.additional].join(','));
+				output.push([m.access, m.firstName, m.lastName, att.primary, +att.secondary, att.additional].join(','));
 				output.push('\n');
 				/*
 				if (m.access) {
@@ -108,28 +106,26 @@ export default {
 				*/
 			}
 
-			output.push('\n\nTotal attendees:,' + this.eventAttendance.length);
-			output.push('\nTotal revenue:,' + this.revenue);
+			const accessRevenue = numAccess* this.accessPrice;
+			const nonAccessRevenue = numNonAccess * this.nonAccessPrice;
+			const drinksRevenue = numDrinks * this.drinkPrice;
 
-			output.push('\nAccess attendees:,' + this.attendance.filter(a => a.member.access).length);
-			output.push('\nNon-access attendees:,' + this.attendance.filter(a => !a.member.access).length);
+			output.push('\n,Amount,Price,Total');
+			output.push(['\nACCESS', numAccess, this.accessPrice, accessRevenue].join(','));
+			output.push(['\nNon-ACCESS', numNonAccess, this.nonAccessPrice, nonAccessRevenue].join(','));
+			output.push(['\nDrinks,', this.drinkPrice, drinksRevenue].join(','));
+			output.push(['\nTOTAL', numAccess + numNonAccess, '', this.revenue])
 
-			output.push('\nAccess foods:,' + this.attendance.filter(a => a.primary && a.member.access).length);
-			output.push('\nNon-Access foods:,' + this.attendance.filter(a => a.primary && !a.member.access).length);
-
-			output.push('\nDrinks:,' + this.eventAttendance.filter(a => a.secondary).length + '\n');
-
-			let outputBlob = new Blob(output, {type:'text/csv'});
+			const outputBlob = new Blob(output, {type:'text/csv'});
+			const dataUrl = window.URL.createObjectURL(outputBlob);
 
 			let downloadLink = document.createElement('a');
-			document.body.appendChild(downloadLink);
-			downloadLink.style = 'display: none;';
-			let dataUrl = window.URL.createObjectURL(outputBlob);
+			downloadLink.style.display = 'none';
 			downloadLink.href = dataUrl;
 			downloadLink.download = this.event.title+'-attendance.csv';
+			document.body.appendChild(downloadLink);
 			downloadLink.click();
 			downloadLink.remove();
-
 		}
 	}
 }
