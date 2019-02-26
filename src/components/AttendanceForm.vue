@@ -13,7 +13,10 @@ md-card
 
         md-card-content(v-if="shared.selectedMember")
                 md-checkbox#food-checkbox(v-model="attendance.primary") Food
-                md-checkbox(v-model="attendance.secondary") Drink
+                md-field
+                    md-icon local_drink
+                    label Drinks
+                    md-input(v-model.number="attendance.secondary", type="number", min="0")
 
                 md-field
                     label Additional
@@ -36,7 +39,7 @@ export default {
             error: "",
             attendance: {
                 primary: false,
-                secondary: false,
+                secondary: 0,
                 additional: ""
             }
         }
@@ -93,7 +96,7 @@ export default {
             if (!att) {
                 this.attendance = {
                     primary: false,
-                    secondary: false,
+                    secondary: 0,
                     additional: ""
                 }
             }
