@@ -75,7 +75,7 @@ export default {
 					result += att.member.access ? this.accessPrice : this.nonAccessPrice;
 
 				if (att.secondary)
-					result += this.drinkPrice;
+					result += att.secondary * this.drinkPrice;
 
 			}
 			return result;
@@ -93,7 +93,7 @@ export default {
 
 			for (let att of this.attendance.slice().reverse()) {
 				let m = att.member;
-				output.push([m.access, m.firstName, m.lastName, att.primary, +att.secondary, att.additional].join(','));
+				output.push([m.access, m.firstName, m.lastName, att.primary, att.secondary, att.additional].join(','));
 				output.push('\n');
 				/*
 				if (m.access) {
