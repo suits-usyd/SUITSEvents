@@ -22,6 +22,10 @@ md-card
                     label Additional
                     md-input(v-model="attendance.additional")
 
+                md-checkbox(v-model="attendance.paidByCard")
+                    md-icon credit_card
+                    | Card payment
+
         md-card-actions(v-if="shared.selectedMember")
             md-button(v-bind:disabled="loading", type="submit") Submit
 </template>
@@ -40,7 +44,8 @@ export default {
             attendance: {
                 primary: false,
                 secondary: 0,
-                additional: ""
+                additional: "",
+                paidByCard: false,
             }
         }
     },
@@ -54,11 +59,7 @@ export default {
                 resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
             }
             else {
-                resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, {
-                    primary: this.attendance.primary,
-                    secondary: this.attendance.secondary,
-                    additional: this.attendance.additional
-                })
+                resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, this.attendance);
             }
 
             this.loading = false;
@@ -97,14 +98,16 @@ export default {
                 this.attendance = {
                     primary: false,
                     secondary: 0,
-                    additional: ""
+                    additional: "",
+                    paidByCard: false,
                 }
             }
             else {
                 this.attendance = {
                     primary: att.primary,
                     secondary: att.secondary,
-                    additional: att.additional
+                    additional: att.additional,
+                    paidByCard: att.paidByCard,
                 }
             }
 
