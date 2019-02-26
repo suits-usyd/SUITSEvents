@@ -17,14 +17,12 @@ md-card
 					md-icon(v-if="a.primary") local_pizza
 
 		md-field
-			label Access
-			md-input(v-model.number="accessPrice", type="number")
+			md-icon attach_money
+			label Food
+			md-input(v-model.number="price", type="number")
 
 		md-field
-			label Non-Access
-			md-input(v-model.number="nonAccessPrice", type="number")
-
-		md-field
+			md-icon local_drink
 			label Drink
 			md-input(v-model.number="drinkPrice", type="number")
 
@@ -50,8 +48,7 @@ export default {
 	name: 'event-report',
 	data () {
 		return {
-			accessPrice: 2,
-			nonAccessPrice: 6,
+			price: 2,
 			drinkPrice: 1,
 			shared: state
 		}
@@ -72,7 +69,7 @@ export default {
 			let result = 0;
 			for (let att of this.attendance) {
 				if (att.primary)
-					result += att.member.access ? this.accessPrice : this.nonAccessPrice;
+					result += this.price;
 
 				if (att.secondary)
 					result += att.secondary * this.drinkPrice;
@@ -106,14 +103,14 @@ export default {
 				*/
 			}
 
-			const accessRevenue = numAccess* this.accessPrice;
-			const nonAccessRevenue = numNonAccess * this.nonAccessPrice;
+			const accessRevenue = numAccess * this.price;
+			const nonAccessRevenue = numNonAccess * this.price;
 			const drinksRevenue = numDrinks * this.drinkPrice;
 
 			output.push('\n,Amount,Price,Total');
-			output.push(['\nACCESS', numAccess, this.accessPrice, accessRevenue].join(','));
-			output.push(['\nNon-ACCESS', numNonAccess, this.nonAccessPrice, nonAccessRevenue].join(','));
-			output.push(['\nDrinks,', this.drinkPrice, drinksRevenue].join(','));
+			output.push(['\nUSU', numAccess, this.price, accessRevenue].join(','));
+			output.push(['\nNon-USU', numNonAccess, "", nonAccessRevenue].join(','));
+			output.push(['\nDrinks', numDrinks, this.drinkPrice, drinksRevenue].join(','));
 			output.push(['\nTOTAL', numAccess + numNonAccess, '', this.revenue])
 
 			const outputBlob = new Blob(output, {type:'text/csv'});
