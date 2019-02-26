@@ -7,7 +7,6 @@ md-card
                 span {{member.firstName}} {{member.lastName}}
                 span(v-if="member.access") &nbsp;— {{member.access}}
                     md-icon(v-if="!member.registered") person_outline
-                md-icon(v-else) attach_money
 
                 p.error(v-show="error") {{error}}
 
