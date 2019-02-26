@@ -18,6 +18,7 @@ md-card
                     md-input(v-model.number="attendance.secondary", type="number", min="0")
 
                 md-field
+                    md-icon description
                     label Additional
                     md-input(v-model="attendance.additional")
 
