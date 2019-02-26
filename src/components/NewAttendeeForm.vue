@@ -14,7 +14,7 @@ md-card
 				md-input(v-model="lastName", required)
 
 			md-field
-				label Access
+				label USU membership number
 				md-input(v-model.number="access", type="number")
 
 		md-card-actions
