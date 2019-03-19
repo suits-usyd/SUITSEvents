@@ -35,9 +35,11 @@ md-card
 			md-icon.people-icon attach_money
 			label {{revenue}}
 
+		md-button.md-icon-button(@click.stop="shared.dialogs.summary = true", title="Show summary")
+			md-icon description
+
 		md-button.md-icon-button(@click.stop="downloadAttendees")
 			md-icon file_download
-
 
 </template>
 

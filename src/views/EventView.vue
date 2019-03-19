@@ -5,6 +5,7 @@ div.md-layout.md-gutter
 	div.md-layout-item
 		attendance-form#att-form
 		new-attendee-form#new-att-form
+	event-summary
 </template>
 
 <script>
@@ -25,7 +26,8 @@ export default {
 		},
 		'new-attendee-form': function (resolve) {
 			require(['../components/NewAttendeeForm.vue'], resolve);
-		}
+		},
+		"event-summary": resolve => require(["../components/EventSummaryDialog.vue"], resolve),
 	},
 	mounted: async function () {
 		let attP = $http.getEventAttendance(this.$route.params.id);

@@ -9,7 +9,8 @@ let state = {
 		deleteEvent: {
 			open: false,
 			selectedEvent: null
-		}
+		},
+		summary: false,
 	},
 	selectedMember: null
 };
