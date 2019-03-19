@@ -11,7 +11,9 @@ md-card
                 p.error(v-show="error") {{error}}
 
         md-card-content(v-show="shared.selectedMember")
-                md-checkbox#food-checkbox(v-model="attendance.primary") Food
+                md-checkbox#food-checkbox(v-model="attendance.primary")
+                    md-icon local_pizza
+                    | Food
                 md-field
                     md-icon local_drink
                     label Drinks
