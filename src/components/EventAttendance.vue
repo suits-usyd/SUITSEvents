@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         attended(id) {
-            return this.eventAttendance.find(a => a.member == id);
+            return this.eventAttendance.find(a => a.member.id == id);
         },
         select(mem) {
             this.shared.selectedMember = mem.id;
