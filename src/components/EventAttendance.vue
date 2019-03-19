@@ -53,9 +53,9 @@ export default {
         }
     },
     computed: {
-		eventAttendance() {
-			return this.shared.attendance.filter(a => a.event.id == this.$route.params.id);
-		},
+        eventAttendance() {
+            return this.shared.attendance.filter(a => a.event.id == this.$route.params.id);
+        },
         filteredMembers() {
             let searchFields = ["firstName", "lastName"];
             let query = this.search;
