@@ -1,8 +1,8 @@
 <template lang="pug">
 div
 	md-toolbar.md-primary
-		h3.md-title 
-			router-link.title-link(to="/") SUITS Events
+		h3.md-title
+			router-link.title-link(to="/") SYNCS Events
 
 	router-view.content
 </template>
