@@ -83,14 +83,14 @@ export default {
 	},
 	methods: {
 		downloadAttendees() {
-			let output = ["AID,First Name,Last Name,food,drink,additional\n"];
+			let output = ["AID,First Name,Last Name,food,drink,additional,card?\n"];
 			const numAccess = this.attendance.filter(a => a.primary && a.member.access).length;
 			const numNonAccess = this.attendance.filter(a => a.primary && !a.member.access).length;
 			const numDrinks = this.attendance.reduce((acc, a) => acc + a.secondary, 0);
 
 			for (let att of this.attendance.slice().reverse()) {
 				let m = att.member;
-				output.push([m.access, m.firstName, m.lastName, att.primary, att.secondary, att.additional].join(','));
+				output.push([m.access, m.firstName, m.lastName, att.primary, att.secondary, att.additional, att.paidByCard].join(','));
 				output.push('\n');
 				/*
 				if (m.access) {
