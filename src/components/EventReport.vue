@@ -12,7 +12,7 @@ md-card
 					span(v-if="a.additional") {{a.additional}}
 				div
 					md-icon(v-if="a.member.access && !a.member.registered") person_outline
-					md-icon(v-if="!a.member.access") attach_money
+					md-icon(v-if="!a.member.access") money_off
 					md-icon(v-if="a.secondary") local_drink
 					md-icon(v-if="a.primary") local_pizza
 
