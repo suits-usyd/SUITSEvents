@@ -6,7 +6,7 @@ md-card
             h2.md-subheading(v-show="shared.selectedMember")
                 span {{member.firstName}} {{member.lastName}}
                 span(v-show="member.access") &nbsp;— {{member.access}}
-                    md-icon(v-show="!member.registered") person_outline
+                md-icon(v-show="!member.registered") person_outline
 
                 p.error(v-show="error") {{error}}
 

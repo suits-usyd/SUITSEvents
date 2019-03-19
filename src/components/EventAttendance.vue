@@ -13,9 +13,9 @@ div
                         span {{mem.firstName}} {{mem.lastName}}
 
                         span(v-if="mem.access") {{mem.access}}
-                            md-icon(v-if="!mem.registered") person_outline
                         span(v-else) NO ACCESS
 
+                    md-icon(v-if="!mem.registered") person_outline
                     md-icon(v-if="attended(mem.id)") check
 
 </template>
