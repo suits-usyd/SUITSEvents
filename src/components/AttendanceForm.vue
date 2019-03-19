@@ -3,14 +3,14 @@ md-card
     form(@submit.prevent="changeAttendance")
         md-card-header
             h1.md-title Attendance
-            h2.md-subheading(v-if="shared.selectedMember")
+            h2.md-subheading(v-show="shared.selectedMember")
                 span {{member.firstName}} {{member.lastName}}
-                span(v-if="member.access") &nbsp;— {{member.access}}
-                    md-icon(v-if="!member.registered") person_outline
+                span(v-show="member.access") &nbsp;— {{member.access}}
+                    md-icon(v-show="!member.registered") person_outline
 
                 p.error(v-show="error") {{error}}
 
-        md-card-content(v-if="shared.selectedMember")
+        md-card-content(v-show="shared.selectedMember")
                 md-checkbox#food-checkbox(v-model="attendance.primary") Food
                 md-field
                     md-icon local_drink
@@ -26,7 +26,7 @@ md-card
                     md-icon credit_card
                     | Card payment
 
-        md-card-actions(v-if="shared.selectedMember")
+        md-card-actions(v-show="shared.selectedMember")
             md-button(v-bind:disabled="loading", type="submit") Submit
 </template>
 
