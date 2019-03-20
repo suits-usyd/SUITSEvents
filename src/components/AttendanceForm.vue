@@ -3,7 +3,7 @@ md-card
     form(@submit.prevent="changeAttendance")
         md-card-header
             h1.md-title Attendance
-            h2.md-subheading(v-show="shared.selectedMember")
+            h2.md-subheading(v-if="shared.selectedMember")
                 span {{member.firstName}} {{member.lastName}}
                 span(v-show="member.access") &nbsp;— {{member.access}}
                 md-icon(v-show="!member.registered") person_outline
