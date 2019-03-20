@@ -37,7 +37,7 @@ import $http from '../http';
 import state from '../state'
 
 export default {
-    name: 'attendance-form',
+    name: 'AttendanceForm',
     data () {
         return {
             shared: state,
@@ -49,33 +49,6 @@ export default {
                 additional: "",
                 paidByCard: false,
             }
-        }
-    },
-    methods: {
-        async changeAttendance() {
-
-            this.loading = true
-
-            let resp;
-            if (!this.attendance.primary && !this.attendance.secondary && !this.attendance.additional) {
-                resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
-            }
-            else {
-                resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, this.attendance);
-            }
-
-            this.loading = false;
-
-            if (resp != null) {
-                state.selectedMember = null;
-                this.error = null;
-                let input = document.getElementById("search-member");
-                input.select();
-                input.focus();
-            }
-            else
-                this.error = "Something went wrong"
-
         }
     },
     computed: {
@@ -115,6 +88,33 @@ export default {
 
             let checkbox = document.getElementById("food-checkbox");
             checkbox.focus();
+        }
+    },
+    methods: {
+        async changeAttendance() {
+
+            this.loading = true
+
+            let resp;
+            if (!this.attendance.primary && !this.attendance.secondary && !this.attendance.additional) {
+                resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
+            }
+            else {
+                resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, this.attendance);
+            }
+
+            this.loading = false;
+
+            if (resp != null) {
+                state.selectedMember = null;
+                this.error = null;
+                let input = document.getElementById("search-member");
+                input.select();
+                input.focus();
+            }
+            else
+                this.error = "Something went wrong"
+
         }
     }
 }

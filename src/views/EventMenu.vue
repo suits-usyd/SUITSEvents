@@ -11,18 +11,18 @@ div#event-menu
 <script>
 import state from '../state'
 export default {
-	name: "event-menu",
-	data () {
-		return {
-			shared: state
-		}
-	},
+	name: "EventMenu",
 	components: {
 		'event-list': function(resolve) {
 			require(['../components/EventList.vue'], resolve)
 		},
 		'add-event-dialog': function(resolve) {
 			require(['../components/AddEventDialog.vue'], resolve)
+		}
+	},
+	data () {
+		return {
+			shared: state
 		}
 	}
 

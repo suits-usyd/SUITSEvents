@@ -17,21 +17,21 @@ import state from '../state'
 import $http from '../http'
 import moment from 'moment'
 export default {
-    name: 'event-card',
+    name: 'EventCard',
     props: ['event'],
     data() {
         return {
             shared: state
         }
     },
-    methods: {
-        async removeEvent() {
-            await $http.deleteEvent(event.id)
-        }
-    },
     computed: {
         eventDate() {
             return moment(this.event.time).format("Do MMM YYYY");
+        }
+    },
+    methods: {
+        async removeEvent() {
+            await $http.deleteEvent(event.id)
         }
     }
 }

@@ -23,25 +23,16 @@ import $http from '../http';
 import state from '../state'
 
 export default {
-    name: "event-list",
+    name: "EventList",
+    components: {
+        'event-card': function (resolve) {
+            require(['./EventCard.vue'], resolve);
+        }
+    },
     data() {
         return {
             query: "",
             shared: state
-        }
-    },
-    methods: {
-        openEvent (eventId, domEvent) {
-            this.$router.push({ name: 'event', params: { id: eventId } });
-        },
-        removeEvent () {
-            $http.deleteEvent(this.shared.dialogs.deleteEvent.selectedEvent);
-            this.shared.dialogs.deleteEvent.close();
-        }
-    },
-    components: {
-        'event-card': function (resolve) {
-            require(['./EventCard.vue'], resolve);
         }
     },
     computed: {
@@ -62,7 +53,16 @@ export default {
 
             return filtered;
         },
-    }
+    },
+    methods: {
+        openEvent (eventId, domEvent) {
+            this.$router.push({ name: 'event', params: { id: eventId } });
+        },
+        removeEvent () {
+            $http.deleteEvent(this.shared.dialogs.deleteEvent.selectedEvent);
+            this.shared.dialogs.deleteEvent.close();
+        }
+    },
 }
 </script>
 

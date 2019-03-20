@@ -14,7 +14,7 @@ import {addAuthHeader} from '../http'
 import state from '../state'
 
 export default {
-	name: "base",
+	name: "Base",
 	data() {
 		return {
 			shared: state

@@ -11,8 +11,8 @@ md-card
 					span {{a.member.firstName}} {{a.member.lastName}}
 					span(v-if="a.additional") {{a.additional}}
 				div
-					md-icon(v-if="a.member.access && !a.member.registered") person_outline
 					md-icon(v-if="!a.member.access") money_off
+					md-icon(v-else-if="!a.member.registered") person_outline
 					md-icon(v-if="a.secondary") local_drink
 					md-icon(v-if="a.primary") local_pizza
 
@@ -47,7 +47,7 @@ md-card
 import state from '../state'
 import moment from 'moment'
 export default {
-	name: 'event-report',
+	name: 'EventReport',
 	data () {
 		return {
 			price: 2,
@@ -147,3 +147,4 @@ export default {
 	color: #ff1744!important
 
 </style>
+

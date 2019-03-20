@@ -27,7 +27,7 @@ import http from '../http';
 import state from '../state';
 
 export default {
-	name: 'new-attendee-form',
+	name: 'NewAttendeeForm',
 	data () {
 		return {
 			firstName: null,

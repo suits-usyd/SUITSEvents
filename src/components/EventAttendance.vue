@@ -24,32 +24,11 @@ div
 import state from '../state';
 const ACCESS_BARCODE_RE = /^9[012]0000(\d{7})$/;
 export default {
-    name: 'event-attendance',
+    name: 'EventAttendance',
     data () {
         return {
             search: '',
             shared: state
-        }
-    },
-    methods: {
-        attended(id) {
-            return this.eventAttendance.find(a => a.member.id == id);
-        },
-        select(mem) {
-            this.shared.selectedMember = mem.id;
-        },
-        autoselect() {
-            let match;
-            if (this.filteredMembers.length == 1) {
-                this.select(this.filteredMembers[0]);
-            } else if (this.filteredMembers.length == 0 && (match = ACCESS_BARCODE_RE.exec(this.search))) {
-                this.$emit("unknown-access", +match[1]);
-            }
-        },
-        selectSearchBox() {
-            let input = document.getElementById("search-member");
-            input.select();
-            input.focus();
         }
     },
     computed: {
@@ -114,6 +93,27 @@ export default {
             }
             return filteredMembers;
         },
+    },
+    methods: {
+        attended(id) {
+            return this.eventAttendance.find(a => a.member.id == id);
+        },
+        select(mem) {
+            this.shared.selectedMember = mem.id;
+        },
+        autoselect() {
+            let match;
+            if (this.filteredMembers.length == 1) {
+                this.select(this.filteredMembers[0]);
+            } else if (this.filteredMembers.length == 0 && (match = ACCESS_BARCODE_RE.exec(this.search))) {
+                this.$emit("unknown-access", +match[1]);
+            }
+        },
+        selectSearchBox() {
+            let input = document.getElementById("search-member");
+            input.select();
+            input.focus();
+        }
     }
 }
 </script>

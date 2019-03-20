@@ -13,7 +13,7 @@ import state from '../state'
 import $http from '../http';
 
 export default {
-	name: "event-view",
+	name: "EventView",
 	components: {
 		'event-report': function (resolve) {
 			require(['../components/EventReport.vue'], resolve);

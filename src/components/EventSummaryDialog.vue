@@ -16,7 +16,7 @@
 <script>
 import state from "../state";
 export default {
-  name: "event-summary",
+  name: "EventSummary",
   data: () => ({ shared: state }),
   computed: {
     eventAttendance() {

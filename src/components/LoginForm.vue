@@ -24,7 +24,16 @@ import $http from "../http";
 import state from '../state'
 
 export default {
-    name: 'login-form',
+    name: 'LoginForm',
+    data () {
+        return {
+            username: null,
+            password: null,
+            error: null,
+            loading: false,
+            shared: state
+        }
+    },
     methods: {
         getToken: async function(e) {
             let data = {
@@ -48,15 +57,6 @@ export default {
             this.shared.token = resp.data.token;
 
             this.$emit("loggedIn")
-        }
-    },
-    data () {
-        return {
-            username: null,
-            password: null,
-            error: null,
-            loading: false,
-            shared: state
         }
     }
 }

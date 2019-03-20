@@ -25,7 +25,7 @@ import $http from '../http';
 import state from '../state'
 
 export default {
-	name: 'add-event-dialog',
+	name: 'AddEventDialog',
 	data () {
 		return {
 			title: "",
