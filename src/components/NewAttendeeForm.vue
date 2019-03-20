@@ -18,6 +18,7 @@ md-card
 				md-input(v-model.number="access", type="number")
 
 		md-card-actions
+			md-progress-spinner(v-show="loading", md-mode="indeterminate", :md-diameter=24, :md-stroke=3)
 			md-button(type="submit") Submit
 
 </template>
@@ -34,10 +35,12 @@ export default {
 			lastName: null,
 			access: null,
 			shared: state,
+			loading: false,
 		}
 	},
 	methods: {
 		async submitForm() {
+			this.loading = true;
 			let id = await http.addUnregMember({
 				firstName: this.firstName,
 				lastName: this.lastName,
@@ -50,6 +53,7 @@ export default {
 			this.firstName = null;
 			this.lastName = null;
 			this.access = null;
+			this.loading = false;
 		},
 		setAID(aid) {
 			this.access = aid;
