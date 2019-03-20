@@ -61,10 +61,7 @@ export default {
     },
     watch: {
         selectedMember(newMember) {
-            if (!this.selectedMember)
-                return
-
-            let att = this.shared.attendance.find(a => a.member.id == this.selectedMember && a.event.id == this.$route.params.id);
+            let att = this.shared.attendance.find(a => a.member.id == newMember && a.event.id == this.$route.params.id);
 
             // reset data to default before trying to set stuff
             Object.assign(this.$data, this.$options.data())
