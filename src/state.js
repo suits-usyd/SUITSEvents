@@ -26,7 +26,7 @@ let state = {
 };
 
 export function updateState(data) {
-    switch(data.resource) {
+  switch(data.resource) {
 		case "Member":
 			updateResource("members", data.action, data.data);
 			break;
@@ -42,14 +42,15 @@ export function updateState(data) {
 }
 
 function updateResource(resource, action, data) {
-	console.log(resource, action, data);
-    switch(action) {
+  console.log(resource, action, data);
+  let i;
+  switch (action) {
 		case "INSERT":
 			state[resource] = [data, ...state[resource]]
 			break;
 
 		case "UPDATE":
-			let i = state[resource].findIndex(r => r.id == data.id)
+			i = state[resource].findIndex(r => r.id == data.id)
 			state[resource].splice(i, 1, data)
 			break;
 
