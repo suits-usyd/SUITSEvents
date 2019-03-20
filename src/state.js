@@ -7,8 +7,15 @@ let state = {
 	dialogs: {
 		newEvent: false,
 		deleteEvent: {
-			open: false,
-			selectedEvent: null
+			isOpen: false,
+      selectedEvent: null,
+      open(eventId) {
+        this.isOpen = true;
+        this.selectedEvent = eventId;
+      },
+      close() {
+        this.isOpen = false;
+      },
 		},
 		summary: false,
 	},

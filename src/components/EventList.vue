@@ -8,12 +8,12 @@ div
             event-card.event(:event="event", @openEvent="openEvent", @deleteEvent="")
 
     md-dialog-confirm(
-        :md-active.sync="shared.dialogs.deleteEvent.open",
+        :md-active.sync="shared.dialogs.deleteEvent.isOpen",
         md-title="Are you sure you wish to delete this event?",
         md-content="The event and any attendance related will be removed permanently. You cannot undo this action.",
         md-confirm-text="Delete event",
         md-cancel-text="Get me out of here",
-        @md-cancel="shared.dialogs.deleteEvent.open = false"
+        @md-cancel="shared.dialogs.deleteEvent.close()"
         @md-confirm="removeEvent"
     )
 </template>
@@ -36,7 +36,7 @@ export default {
         },
         removeEvent () {
             $http.deleteEvent(this.shared.dialogs.deleteEvent.selectedEvent);
-            this.shared.dialogs.deleteEvent.open = false;
+            this.shared.dialogs.deleteEvent.close();
         }
     },
     components: {
