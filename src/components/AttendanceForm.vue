@@ -29,6 +29,7 @@ md-card
                     | Card payment
 
         md-card-actions(v-show="shared.selectedMember")
+            md-progress-spinner(v-show="loading", md-mode="indeterminate", :md-diameter=24, :md-stroke=3)
             md-button(v-bind:disabled="loading", type="submit") Submit
 </template>
 
