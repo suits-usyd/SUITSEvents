@@ -19,7 +19,10 @@ let state = {
 		},
 		summary: false,
 	},
-	selectedMember: null
+	selectedMember: null,
+	selectMember(memberId) {
+		this.selectedMember = memberId;
+	},
 };
 
 export function updateState(data) {

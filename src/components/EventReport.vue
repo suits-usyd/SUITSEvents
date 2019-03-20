@@ -6,7 +6,7 @@ md-card
 
 	md-card-content
 		md-list#report-list.md-double-line
-			md-list-item(v-for="a of attendance", :key="a.id", @click="shared.selectedMember = a.member.id")
+			md-list-item(v-for="a of attendance", :key="a.id", @click="shared.selectMember(a.member.id)")
 				div.md-list-item-text
 					span {{a.member.firstName}} {{a.member.lastName}}
 					span(v-if="a.additional") {{a.additional}}
@@ -147,4 +147,3 @@ export default {
 	color: #ff1744!important
 
 </style>
-

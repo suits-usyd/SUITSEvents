@@ -44,7 +44,7 @@ export default {
 				access: this.access || undefined,
 			});
 			if (id != null) {
-				this.shared.selectedMember = id;
+				this.shared.selectMember(id);
 			}
 
 			this.firstName = null;

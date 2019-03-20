@@ -99,7 +99,7 @@ export default {
             return this.eventAttendance.find(a => a.member.id == id);
         },
         select(mem) {
-            this.shared.selectedMember = mem.id;
+            this.shared.selectMember(mem.id);
         },
         autoselect() {
             let match;

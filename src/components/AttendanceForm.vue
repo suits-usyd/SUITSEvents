@@ -103,7 +103,7 @@ export default {
             this.loading = false;
 
             if (resp != null) {
-                state.selectedMember = null;
+                state.selectMember(null);
                 this.error = null;
                 let input = document.getElementById("search-member");
                 input.select();
