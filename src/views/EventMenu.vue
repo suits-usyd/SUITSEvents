@@ -9,13 +9,13 @@ div#event-menu
 </template>
 
 <script>
+import EventList from '../components/EventList.vue'
 import state from '../state'
+
 export default {
 	name: "EventMenu",
 	components: {
-		'event-list': function(resolve) {
-			require(['../components/EventList.vue'], resolve)
-		},
+		'event-list': EventList,
 		'add-event-dialog': function(resolve) {
 			require(['../components/AddEventDialog.vue'], resolve)
 		}
