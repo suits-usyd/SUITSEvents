@@ -19,12 +19,12 @@ md-card
 		md-field
 			md-icon attach_money
 			label Food
-			md-input(v-model.number="price", type="number")
+			md-input(v-model.number="price", type="number", min=0)
 
 		md-field
 			md-icon local_drink
 			label Drink
-			md-input(v-model.number="drinkPrice", type="number")
+			md-input(v-model.number="drinkPrice", type="number", min=0)
 
 	md-card-actions
 		div.summary
