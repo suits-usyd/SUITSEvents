@@ -18,6 +18,7 @@ md-card
                     md-icon local_drink
                     label Drinks
                     md-input(v-model.number="attendance.secondary", type="number", min="0")
+                    md-button.md-icon-button(@click="incrementDrink", tabindex=-1) +
 
                 md-field
                     md-icon description
@@ -113,7 +114,10 @@ export default {
             else
                 this.error = "Something went wrong"
 
-        }
+        },
+        incrementDrink() {
+            this.attendance.secondary++;
+        },
     }
 }
 </script>
