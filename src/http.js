@@ -49,7 +49,7 @@ export default {
         let resp = await response($http.get('/members'));
         if (resp == null)
             return null;
-        return resp.data;
+        return resp.data.reverse();
     },
     async getEventAttendance(eventId) {
         /* attendance is normalised by providing a memberId instead of member data
