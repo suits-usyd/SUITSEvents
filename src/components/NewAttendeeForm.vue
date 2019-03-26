@@ -41,11 +41,19 @@ export default {
 	methods: {
 		async submitForm() {
 			this.loading = true;
-			let id = await http.addUnregMember({
-				firstName: this.firstName,
-				lastName: this.lastName,
-				access: this.access || undefined,
-			});
+			let id;
+			try {
+				id = await http.addUnregMember({
+					firstName: this.firstName,
+					lastName: this.lastName,
+					access: this.access || undefined,
+				});
+			} catch (ex) {
+				return;
+			} finally {
+				this.loading = false;
+			}
+
 			if (id != null) {
 				this.shared.selectMember(id);
 			}
@@ -53,7 +61,6 @@ export default {
 			this.firstName = null;
 			this.lastName = null;
 			this.access = null;
-			this.loading = false;
 		},
 		setAID(aid) {
 			this.access = aid;

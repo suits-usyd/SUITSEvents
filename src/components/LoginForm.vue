@@ -4,7 +4,7 @@ md-card.login-card
         md-card-header
             div.md-title Log in
             div.md-subhead.error(v-show="error") {{error}}
-    
+
         md-card-content
             md-field
                 label Username
@@ -35,23 +35,24 @@ export default {
         }
     },
     methods: {
-        getToken: async function(e) {
+        getToken: async function() {
             let data = {
                 user: this.username,
                 pass: this.password
             };
 
             this.loading = true;
+            let resp;
 
-            let resp = await $http.auth(data);
-
-            this.loading = false;
-
-            if (resp == null) {
-                this.error = "Login failed"
-                return; // auth failed
+            try {
+                resp = await $http.auth(data);
+            } catch (ex) {
+                this.error = ex;
+                return;
+            } finally {
+                this.loading = false;
             }
-            
+
             console.log(resp);
             sessionStorage.setItem('token', resp.data.token)
             this.shared.token = resp.data.token;

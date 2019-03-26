@@ -95,14 +95,19 @@ export default {
             this.loading = true
 
             let resp;
-            if (!this.attendance.primary && !this.attendance.secondary && !this.attendance.additional) {
-                resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
+            try {
+                if (!this.attendance.primary && !this.attendance.secondary && !this.attendance.additional) {
+                    resp = await $http.deleteAttendance(this.$route.params.id, this.shared.selectedMember);
+                }
+                else {
+                    resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, this.attendance);
+                }
+            } catch (ex) {
+                this.error = ex;
+                return;
+            } finally {
+                this.loading = false;
             }
-            else {
-                resp = await $http.addAttendance(this.$route.params.id, this.shared.selectedMember, this.attendance);
-            }
-
-            this.loading = false;
 
             if (resp != null) {
                 state.selectMember(null);

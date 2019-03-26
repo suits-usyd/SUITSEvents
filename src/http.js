@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from './routes';
 import state from './state'
 
 let $http = axios.create({
@@ -15,8 +16,14 @@ let response = async function(req) {
         return (await req);
     }
     catch (e) {
-        console.log(e);
-        return null
+        console.error(e);
+        if (e.response && e.response.status == 401) {
+            // invalid token
+            state.token = null;
+            router.push("/login");
+            return;
+        }
+        throw e;
     }
 }
 
@@ -25,9 +32,7 @@ if (state.token)
 
 export default {
     async auth(data) {
-        let resp = await response($http.post('/token', data));
-        if (resp == null)
-            return null;
+        let resp = await $http.post('/token', data);
         return resp;
     },
     async addEvent(data) {
@@ -54,7 +59,7 @@ export default {
     async getEventAttendance(eventId) {
         /* attendance is normalised by providing a memberId instead of member data
             Use the keyed members object to provide references to member data. */
-        
+
         let params = new URLSearchParams();
         params.append('event', eventId);
         let resp = await response($http.get('/attendance?'+params.toString()));
@@ -72,7 +77,7 @@ export default {
         }
         else
             return await response($http.put(att.ref, data))
-            
+
     },
 
     async addUnregMember(data) {
@@ -87,17 +92,11 @@ export default {
         if (!att)
             return 1; // hacky. the only check is != null so this will be fine
         let resp = await response($http.delete(att.ref));
-        if (resp == null)
-            return null;
         return resp;
     },
 
     async deleteEvent(eventId) {
         let resp = await response($http.delete('/events/'+eventId));
-
-        if (resp == null)
-            return null
-
         return resp;
     }
 
