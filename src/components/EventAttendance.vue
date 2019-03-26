@@ -67,13 +67,22 @@ export default {
                 query = query.toLowerCase().split(/\s+/g);
             }
 
-            let filteredMembers = [];
+            let filteredMembers = this.doSearch(query, searchFields, (a, b) => a == b);
+            if (!filteredMembers.length) {
+                filteredMembers = this.doSearch(query, searchFields, (a, b) => a.includes(b));
+            }
+            return filteredMembers;
+        },
+    },
+    methods: {
+        doSearch(query, searchFields, predicate) {
+            const filteredMembers = [];
             for (let mem of this.shared.members) {
                 let matches = true;
                 for (let word of query) {
                     let wordMatches = false;
                     for (let field of searchFields) {
-                        if (mem[field] && String(mem[field]).toLowerCase().includes(word)) {
+                        if (mem[field] && predicate(String(mem[field]).toLowerCase(), word)) {
                             wordMatches = true;
                             break;
                         }
@@ -93,8 +102,6 @@ export default {
             }
             return filteredMembers;
         },
-    },
-    methods: {
         attended(id) {
             return this.eventAttendance.find(a => a.member.id == id);
         },
