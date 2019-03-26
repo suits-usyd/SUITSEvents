@@ -4,7 +4,7 @@ import state, {updateState} from './state'
 let socket = null;
 
 let createSocket = function () {
-    if (!socket) {
+    if (!(socket && socket.connected)) {
         socket = io(state.apiURL, {
             query: {
                 token: state.token
