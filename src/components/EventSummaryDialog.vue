@@ -21,7 +21,7 @@ export default {
   computed: {
     eventAttendance() {
       return this.shared.attendance.filter(
-        a => a.event.id == this.$route.params.id
+        a => a.eventId == this.$route.params.id
       );
     },
     additionals() {

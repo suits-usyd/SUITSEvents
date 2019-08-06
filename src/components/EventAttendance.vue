@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         eventAttendance() {
-            return this.shared.attendance.filter(a => a.event.id == this.$route.params.id);
+            return this.shared.attendance.filter(a => a.eventId == this.$route.params.id);
         },
         filteredMembers() {
             let searchFields = ["firstName", "lastName"];
@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         attended(id) {
-            return this.eventAttendance.find(a => a.member.id == id);
+            return this.eventAttendance.find(a => a.memberId == id);
         },
         select(mem) {
             this.shared.selectMember(mem.id);

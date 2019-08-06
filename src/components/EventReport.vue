@@ -60,11 +60,11 @@ export default {
 			return this.shared.events.find(e => e.id == this.$route.params.id)
 		},
 		eventAttendance () {
-			return this.shared.attendance.filter(a => a.event.id == this.$route.params.id)
+			return this.shared.attendance.filter(a => a.eventId == this.$route.params.id)
 		},
 		attendance() {
 			return this.eventAttendance.map(a => Object.assign({}, a, {
-				member: this.shared.members.find(m => m.id == a.member.id),
+				member: this.shared.members.find(m => m.id == a.memberId),
 			}));
 		},
 		revenue() {

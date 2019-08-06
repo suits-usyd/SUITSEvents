@@ -68,7 +68,7 @@ export default {
         return resp.data.reverse();
     },
     async addAttendance(eventId, memberId, data) {
-        let att = state.attendance.find(a => a.member.id == memberId && a.event.id == eventId);
+        let att = state.attendance.find(a => a.memberId == memberId && a.eventId == eventId);
         if (!att) {
             let params = new URLSearchParams();
             params.append('event', eventId);
@@ -88,7 +88,7 @@ export default {
     },
 
     async deleteAttendance(eventId, memId) {
-        let att = state.attendance.find(a => a.member.id == memId && a.event.id == eventId);
+        let att = state.attendance.find(a => a.memberId == memId && a.eventId == eventId);
         if (!att)
             return 1; // hacky. the only check is != null so this will be fine
         let resp = await response($http.delete(att.ref));
