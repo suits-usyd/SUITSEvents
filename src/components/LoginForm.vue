@@ -8,10 +8,10 @@ md-card.login-card
         md-card-content
             md-field
                 label Username
-                md-input(v-model="username")
+                md-input(v-model="username", required)
             md-field(v-bind:class=" { 'md-input-invalid': error } ")
                 label Password
-                md-input(v-model="password", type="password")
+                md-input(v-model="password", type="password", required)
                 span.md-error {{error}}
 
         md-card-actions
